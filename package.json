@@ -1,0 +1,29 @@
+{
+  "name": "ts-service-template",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "nodemon",
+    "build": "node .esbuildrc.js",
+    "watch": "node .esbuildrc.js --watch"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "esbuild": "latest",
+    "nodemon": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest",
+    "sane": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=16.13.2",
+    "pnpm": ">=6.29.1"
+  }
+}

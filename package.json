@@ -4,26 +4,41 @@
   "main": "src/index.js",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "dev": "nodemon",
-    "build": "node .esbuildrc.js",
-    "watch": "node .esbuildrc.js --watch"
+    "preinstall": "ts-node scripts/preinstall.ts",
+    "watch": "concurrently pnpm:watch:js pnpm:watch:node",
+    "watch:js": "ts-node scripts/build.ts --watch",
+    "watch:node": "nodemon dist/index.js",
+    "build": "pnpm clean && ts-node scripts/build.ts --production",
+    "lint": "ts-standard | snazzy",
+    "lint:fix": "ts-standard --fix | snazzy",
+    "clean": "rm -rf dist/*",
+    "prepare": "husky install",
+    "docker:build": "docker build -t ts-service-template .",
+    "docker:run": "docker run -p 3000:3000 ts-service-template"
   },
   "devDependencies": {
+    "@types/jest": "latest",
     "@types/node": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
+    "concurrently": "latest",
     "esbuild": "latest",
+    "husky": "latest",
+    "jest": "latest",
     "nodemon": "latest",
-    "eslint": "latest",
-    "eslint-config-prettier": "latest",
-    "eslint-plugin-prettier": "latest",
     "prettier": "latest",
-    "sane": "latest",
+    "snazzy": "latest",
+    "ts-jest": "latest",
+    "ts-node": "latest",
+    "ts-standard": "latest",
     "typescript": "latest"
   },
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.0.0"
+  },
   "engines": {
-    "node": ">=16.13.2",
+    "node": ">=16.14.0",
     "pnpm": ">=6.29.1"
+  },
+  "ts-standard": {
+    "project": "./tsconfig.json"
   }
 }

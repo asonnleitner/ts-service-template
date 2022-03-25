@@ -1,16 +1,16 @@
 {
   "name": "ts-service-template",
   "version": "0.0.0",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "preinstall": "ts-node scripts/preinstall.ts",
+    "preinstall": "node scripts/preinstall.js",
     "watch": "concurrently pnpm:watch:js pnpm:watch:node",
-    "watch:js": "ts-node scripts/build.ts --watch",
+    "watch:js": "node scripts/build.js --watch",
     "watch:node": "nodemon dist/index.js",
-    "build": "pnpm clean && ts-node scripts/build.ts --production",
-    "lint": "ts-standard | snazzy",
-    "lint:fix": "ts-standard --fix | snazzy",
+    "build": "pnpm clean && node scripts/build.js --production",
+    "lint": "eslint --ext .js,.ts .",
+    "lint:fix": "eslint --ext .js,.ts --fix .",
     "clean": "rm -rf dist/*",
     "prepare": "husky install",
     "docker:build": "docker build -t ts-service-template .",
@@ -19,8 +19,15 @@
   "devDependencies": {
     "@types/jest": "latest",
     "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
     "concurrently": "latest",
     "esbuild": "latest",
+    "eslint": "latest",
+    "eslint-config-standard-with-typescript": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-node": "latest",
+    "eslint-plugin-promise": "latest",
     "husky": "latest",
     "jest": "latest",
     "nodemon": "latest",
@@ -28,17 +35,23 @@
     "snazzy": "latest",
     "ts-jest": "latest",
     "ts-node": "latest",
-    "ts-standard": "latest",
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.0.0"
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "esling": "^7.12.1",
+    "eslint-config-standard-with-typescript": "latest",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.0.0"
   },
   "engines": {
     "node": ">=16.14.0",
     "pnpm": ">=6.29.1"
   },
-  "ts-standard": {
-    "project": "./tsconfig.json"
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }

@@ -1,1 +1,1 @@
-process.stdout.write('Hello World!\n')
+export default () => process.stdout.write('Hello World!\n')

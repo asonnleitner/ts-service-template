@@ -4,19 +4,24 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "preinstall": "node scripts/preinstall.js",
     "watch": "concurrently pnpm:watch:js pnpm:watch:node",
     "watch:js": "node scripts/build.js --watch",
     "watch:node": "nodemon dist/index.js",
     "build": "pnpm clean && node scripts/build.js --production",
-    "lint": "eslint --ext .js,.ts .",
-    "lint:fix": "eslint --ext .js,.ts --fix .",
+    "lint": "eslint . --ext .js,.ts --max-warnings 0 && pretty-quick --check",
+    "lint:fix": "eslint --fix . --ext .js,.ts && pretty-quick",
     "clean": "rm -rf dist/*",
     "prepare": "husky install",
     "docker:build": "docker build -t ts-service-template .",
-    "docker:run": "docker run -p 3000:3000 ts-service-template"
+    "docker:run": "docker run -p 3000:3000 ts-service-template",
+    "preinstall": "npx only-allow pnpm -y"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
     "@types/jest": "latest",
     "@types/node": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -28,13 +33,13 @@
     "eslint-plugin-import": "latest",
     "eslint-plugin-node": "latest",
     "eslint-plugin-promise": "latest",
-    "husky": "latest",
+    "husky": "^7.0.4",
     "jest": "latest",
+    "lint-staged": "^12.3.7",
     "nodemon": "latest",
     "prettier": "latest",
-    "snazzy": "latest",
+    "pretty-quick": "^3.1.3",
     "ts-jest": "latest",
-    "ts-node": "latest",
     "typescript": "latest"
   },
   "peerDependencies": {
@@ -46,12 +51,12 @@
     "eslint-plugin-promise": "^5.0.0"
   },
   "engines": {
-    "node": ">=16.14.0",
-    "pnpm": ">=6.29.1"
+    "node": ">=17.8.0"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "none"
+    "trailingComma": "none",
+    "arrowParens": "always"
   }
 }
